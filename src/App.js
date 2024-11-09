@@ -1,21 +1,18 @@
 import "./App.css";
 import Header from "./components/Header/Header";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 
 function App() {
   return (
     <div className="app-container">
       <header className="App-header">
-        <Header />
-        <div>
-          test Link
-          <div>
-            <button>
-              <Link to="/user">go to user</Link>
-            </button>
-            <button>
-              <Link to="/admin">go to admin</Link>
-            </button>
+        <div className="header-container">
+          <Header />
+        </div>
+        <div className="main-container">
+          <div className="sidenav-container"></div>
+          <div className="app-content">
+            <Outlet />
           </div>
         </div>
       </header>
