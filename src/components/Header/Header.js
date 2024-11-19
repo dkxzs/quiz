@@ -1,7 +1,6 @@
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
 import { NavLink } from "react-router-dom";
 const Header = () => {
   return (
@@ -9,11 +8,11 @@ const Header = () => {
       <Container>
         {/* <Navbar.Brand href="#home">Sudo Dev</Navbar.Brand> */}
         <NavLink to="/" className="navbar-brand">
-              Sudo Dev
-            </NavLink>
+          Sudo Dev
+        </NavLink>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
+          <Nav className="me-auto navbar-nav">
             <NavLink to="/" className="nav-link">
               Home
             </NavLink>
@@ -25,11 +24,13 @@ const Header = () => {
             </NavLink>
           </Nav>
           <Nav>
-            <NavDropdown title="Settings" id="basic-nav-dropdown">
-              <NavDropdown.Item >Log in</NavDropdown.Item>
-              <NavDropdown.Item >Log out</NavDropdown.Item>
-              <NavDropdown.Item >Profile</NavDropdown.Item>
-            </NavDropdown>
+            <button className="btn-login">Log in</button>
+            <button className="btn-register">Register</button>
+            {/* <NavDropdown title="Settings" id="basic-nav-dropdown">
+              <NavDropdown.Item>Log in</NavDropdown.Item>
+              <NavDropdown.Item>Log out</NavDropdown.Item>
+              <NavDropdown.Item>Profile</NavDropdown.Item>
+            </NavDropdown> */}
           </Nav>
         </Navbar.Collapse>
       </Container>
