@@ -1,4 +1,5 @@
 import "react-pro-sidebar/dist/css/styles.css";
+import { Link } from "react-router-dom";
 import {
   ProSidebar,
   Menu,
@@ -9,17 +10,12 @@ import {
   SidebarContent,
 } from "react-pro-sidebar";
 
-import {
-  FaTachometerAlt,
-  FaGem,
-  FaGithub,
-  FaRegLaughWink,
-} from "react-icons/fa";
+import { FaTachometerAlt, FaGem, FaGithub } from "react-icons/fa";
 import sidebarBg from "../../assets/bg2.jpg";
 import { DiReact } from "react-icons/di";
 import "./SideBar.scss";
 
-const SideBar = (props) => {
+const Sidebar = (props) => {
   const { image, collapsed, toggled, handleToggleSidebar } = props;
   return (
     <>
@@ -50,11 +46,17 @@ const SideBar = (props) => {
 
         <SidebarContent>
           <Menu iconShape="circle">
-            <MenuItem icon={<FaTachometerAlt />}>Dashboard</MenuItem>
+            <MenuItem icon={<FaTachometerAlt />}>
+            <Link to="/admin" />
+            Dashboard
+            </MenuItem>
           </Menu>
           <Menu iconShape="circle">
             <SubMenu icon={<FaGem />} title="Features">
-              <MenuItem> Manager Users</MenuItem>
+              <MenuItem> 
+              <Link to="/admin/manager-users"/>
+              Manager Users
+              </MenuItem>
               <MenuItem> Manager Quiz</MenuItem>
               <MenuItem> Manager Questions</MenuItem>
             </SubMenu>
@@ -93,4 +95,4 @@ const SideBar = (props) => {
   );
 };
 
-export default SideBar;
+export default Sidebar;
