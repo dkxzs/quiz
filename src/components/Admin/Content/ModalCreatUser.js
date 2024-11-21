@@ -3,18 +3,19 @@ import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { FcPlus } from "react-icons/fc";
+import { toast } from "react-toastify";
 
 const ModalCreateUser = (props) => {
   const { show, setShow } = props;
 
   const handleClose = () => {
-    setShow(false)
-    setEmail("")
-    setPasswrod("")
-    setUsername("")
-    setRole("")
-    setImage("")
-    setPreviewImage("")
+    setShow(false);
+    setEmail("");
+    setPasswrod("");
+    setUsername("");
+    setRole("");
+    setImage("");
+    setPreviewImage("");
   };
   const [email, setEmail] = useState("");
   const [password, setPasswrod] = useState("");
@@ -29,18 +30,26 @@ const ModalCreateUser = (props) => {
     setImage(e.target.files[0]);
   };
 
+  const validateEmail = (email) => {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     // validate
-
-    // call api
-    // const data = {
-    //   email: email,
-    //   password: password,
-    //   username: username,
-    //   role: role,
-    //   userImage: image,
-    // };
+    const isValidEmail = validateEmail(email);
+    if (!isValidEmail) {
+      toast.error("Email không hợp lệ");
+      return;
+    }
+    if (!email || !password || !username || !image) {
+      toast.error("Vui lòng nhập đầy đủ thông tin");
+      return;
+    }
 
     const data = new FormData();
     data.append("email", email);
@@ -53,6 +62,12 @@ const ModalCreateUser = (props) => {
       "http://localhost:8081/api/v1/participant",
       data
     );
+    if(res.data && res.data.EC === 0){
+      toast.success(res.data.EM);
+      handleClose();
+    } else {
+      toast.error(res.data.EM);
+    }
     console.log(res.data);
   };
 
