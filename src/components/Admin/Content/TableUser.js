@@ -1,24 +1,14 @@
 import { useEffect, useState } from "react";
-import { getAllUser } from "../../../services/apiServices";
 const TableUser = (props) => {
-  const [listUser, setListUser] = useState([]);
-
-  useEffect(() => {
-    fetchAllUser();
-  }, []);
-
-  const fetchAllUser = async () => {
-    const response = await getAllUser();
-    console.log(response.DT);
-    setListUser(response.DT || []);
-  };
+  const { listUsers } = props;
+  
 
   return (
     <>
       <table className="table table-hover table-bordered">
         <thead>
           <tr>
-            <th scope="col">No</th>
+            <th scope="col">ID</th>
             <th scope="col">Username</th>
             <th scope="col">Email</th>
             <th scope="col">Role</th>
@@ -26,11 +16,11 @@ const TableUser = (props) => {
           </tr>
         </thead>
         <tbody>
-          {listUser &&
-            listUser.map((item, index) => {
+          {listUsers &&
+            listUsers.map((item, index) => {
               return (
                 <tr key={`table-user-${index}`}>
-                  <td>{index + 1}</td>
+                  <td>{item.id}</td>
                   <td>{item.username}</td>
                   <td>{item.email}</td>
                   <td>{item.role}</td>
@@ -42,7 +32,7 @@ const TableUser = (props) => {
                 </tr>
               );
             })}
-          {listUser.length === 0 && (
+          {listUsers.length === 0 && (
             <tr>
               <td colSpan={4}>No data</td>
             </tr>

@@ -3,9 +3,22 @@ import "./ManagerUser.scss";
 import { FcPlus } from "react-icons/fc";
 import { useState } from "react";
 import TableUser from "./TableUser.js";
+import { useEffect } from "react";
+import { getAllUser } from "../../../services/apiServices";
 
 const ManagerUser = (props) => {
   const [showModal, setShowModal] = useState(false);
+  const [listUsers, setListUsers] = useState([]);
+
+  useEffect(() => {
+    fetchAllUser();
+  }, []);
+
+  const fetchAllUser = async () => {
+    const response = await getAllUser();
+    console.log(response.DT);
+    setListUsers(response.DT || []);
+  };
 
   return (
     <div className="manager-user-container">
@@ -21,9 +34,13 @@ const ManagerUser = (props) => {
           </button>
         </div>
         <div className="table-users">
-          <TableUser />
+          <TableUser listUsers={listUsers} />
         </div>
-        <ModalCreateUser show={showModal} setShow={setShowModal} />
+        <ModalCreateUser
+          show={showModal}
+          setShow={setShowModal}
+          fetchAllUser={fetchAllUser}
+        />
       </div>
     </div>
   );
