@@ -1,14 +1,21 @@
 import ModalCreateUser from "./ModalCreatUser.js";
 import "./ManagerUser.scss";
 import { FcPlus } from "react-icons/fc";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TableUser from "./TableUser.js";
-import { useEffect } from "react";
 import { getAllUser } from "../../../services/apiServices";
+import ModalUpdateUser from "./ModalUpdateUser.js";
 
 const ManagerUser = (props) => {
-  const [showModal, setShowModal] = useState(false);
+  const [showModalCreate, setShowModalCreate] = useState(false);
+  const [showModalUpdate, setShowModalUpdate] = useState(false);
   const [listUsers, setListUsers] = useState([]);
+  const [dataUpdate, setDataUpdate] = useState({});
+
+  const onClickUpdate = (user) => {
+    setShowModalUpdate(true);
+    setDataUpdate(user);
+  };
 
   useEffect(() => {
     fetchAllUser();
@@ -27,19 +34,24 @@ const ManagerUser = (props) => {
         <div className="btn-add-new">
           <button
             className="btn btn-primary"
-            onClick={() => setShowModal(true)}
+            onClick={() => setShowModalCreate(true)}
           >
             <FcPlus />
             Add new user
           </button>
         </div>
         <div className="table-users">
-          <TableUser listUsers={listUsers} />
+          <TableUser listUsers={listUsers} onClickUpdate={onClickUpdate} />
         </div>
         <ModalCreateUser
-          show={showModal}
-          setShow={setShowModal}
+          show={showModalCreate}
+          setShow={setShowModalCreate}
           fetchAllUser={fetchAllUser}
+        />
+        <ModalUpdateUser
+          show={showModalUpdate}
+          setShow={setShowModalUpdate}
+          dataUpdate={dataUpdate}
         />
       </div>
     </div>

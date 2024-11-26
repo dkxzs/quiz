@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 const TableUser = (props) => {
-  const { listUsers } = props;
-  
+  const { listUsers, onClickUpdate } = props;
 
   return (
     <>
@@ -12,7 +11,9 @@ const TableUser = (props) => {
             <th scope="col">Username</th>
             <th scope="col">Email</th>
             <th scope="col">Role</th>
-            <th scope="col" className="text-center">Actions</th>
+            <th scope="col" className="text-center">
+              Actions
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -26,7 +27,12 @@ const TableUser = (props) => {
                   <td>{item.role}</td>
                   <td className="text-center">
                     <button className="btn btn-primary">View</button>
-                    <button className="btn btn-warning mx-3">Update</button>
+                    <button
+                      className="btn btn-warning mx-3"
+                      onClick={() => onClickUpdate(item)}
+                    >
+                      Update
+                    </button>
                     <button className="btn btn-danger">Delete</button>
                   </td>
                 </tr>
