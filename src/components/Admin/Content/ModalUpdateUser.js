@@ -3,11 +3,11 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { FcPlus } from "react-icons/fc";
 import { toast } from "react-toastify";
-import { createNewUser } from "../../../services/apiServices";
+import { updateUser } from "../../../services/apiServices";
 import _ from "lodash";
 
 const ModalUpdateUser = (props) => {
-  const { show, setShow, dataUpdate } = props;
+  const { show, setShow, dataUpdate, resetData } = props;
 
   const handleClose = () => {
     setShow(false);
@@ -17,6 +17,7 @@ const ModalUpdateUser = (props) => {
     setRole("");
     setImage("");
     setPreviewImage("");
+    resetData();
   };
   const [email, setEmail] = useState("");
   const [password, setPasswrod] = useState("");
@@ -32,7 +33,7 @@ const ModalUpdateUser = (props) => {
       setUsername(dataUpdate.username);
       setRole(dataUpdate.role);
       setImage("");
-      if(dataUpdate.image){
+      if (dataUpdate.image) {
         setPreviewImage(`data:image/png;base64,${dataUpdate.image}`);
       }
     }
@@ -60,12 +61,12 @@ const ModalUpdateUser = (props) => {
       toast.error("Email không hợp lệ");
       return;
     }
-    if (!email || !password || !username || !image) {
+    if (!username) {
       toast.error("Vui lòng nhập đầy đủ thông tin");
       return;
     }
 
-    let data = await createNewUser(email, password, username, role, image);
+    let data = await updateUser(dataUpdate.id, username, role, image);
     if (data && data.EC === 0) {
       toast.success(data.EM);
       handleClose();
@@ -100,7 +101,6 @@ const ModalUpdateUser = (props) => {
                 type="email"
                 className="form-control"
                 value={email}
-                disabled
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>

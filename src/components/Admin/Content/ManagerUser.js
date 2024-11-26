@@ -17,6 +17,10 @@ const ManagerUser = (props) => {
     setDataUpdate(user);
   };
 
+  const resetData = () => {
+    setDataUpdate({});
+  }
+
   useEffect(() => {
     fetchAllUser();
   }, []);
@@ -52,6 +56,8 @@ const ManagerUser = (props) => {
           show={showModalUpdate}
           setShow={setShowModalUpdate}
           dataUpdate={dataUpdate}
+          fetchAllUser={fetchAllUser}
+          resetData={resetData}
         />
       </div>
     </div>
