@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
 const TableUser = (props) => {
-  const { listUsers, onClickUpdate } = props;
+  const { listUsers, onClickUpdate, onClickDelete } = props;
 
   return (
     <>
@@ -33,7 +32,12 @@ const TableUser = (props) => {
                     >
                       Update
                     </button>
-                    <button className="btn btn-danger">Delete</button>
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => onClickDelete(item)}
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               );
