@@ -7,7 +7,7 @@ import { updateUser } from "../../../services/apiServices";
 import _ from "lodash";
 
 const ModalUpdateUser = (props) => {
-  const { show, setShow, dataUpdate, resetData } = props;
+  const { show, setShow, dataUpdate, resetData, fetchAllUserWithPaging, currentPage } = props;
 
   const handleClose = () => {
     setShow(false);
@@ -70,7 +70,9 @@ const ModalUpdateUser = (props) => {
     if (data && data.EC === 0) {
       toast.success(data.EM);
       handleClose();
-      await props.fetchAllUser();
+      // await props.fetchAllUser();
+      
+      await fetchAllUserWithPaging(currentPage);
     } else {
       toast.error(data.EM);
     }
