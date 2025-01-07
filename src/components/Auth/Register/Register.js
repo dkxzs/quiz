@@ -1,15 +1,17 @@
 import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import btnLoginBg from "../../../assets/qizzz.png";
-import { Link, useNavigate } from "react-router-dom";
-import "./Login.scss";
+import { useNavigate, Link } from "react-router-dom";
 
-import { login } from "../../../services/apiServices";
+import "./Register.scss";
+
+import { register } from "../../../services/apiServices";
 import { toast } from "react-toastify";
 
-export default function LoginPage() {
+const Register = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const validateEmail = () => {
@@ -20,6 +22,24 @@ export default function LoginPage() {
     }
     if (!reg.test(email)) {
       toast.error("Please enter a valid email address");
+      return false;
+    }
+    return true;
+  };
+
+  const validateUsername = () => {
+    if (!username) {
+      toast.error("Please enter your username");
+      return false;
+    }
+    if (username.trim().length <= 2) {
+      toast.error("Username must be at least 3 characters");
+      return false;
+    }
+    if (!/^[a-zA-Z0-9_]+$/.test(username)) {
+      toast.error(
+        "Username can only contain letters, numbers, and underscores"
+      );
       return false;
     }
     return true;
@@ -39,19 +59,19 @@ export default function LoginPage() {
   };
 
   const validate = () => {
-    if (!validateEmail() || !validatePassword()) {
+    if (!validateEmail() || !validateUsername() || !validatePassword()) {
       return false;
     }
     return true;
   };
 
-  const handleLogin = async (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     if (!validate()) return;
-    let data = await login(email, password);
+    let data = await register(email, password, username);
     if (data && data.EC === 0) {
       toast.success(data.EM);
-      navigate("/");
+      navigate("/login");
     }
 
     if (data && data.EC !== 0) {
@@ -88,6 +108,21 @@ export default function LoginPage() {
             </div>
 
             <div className="mb-3">
+              <label htmlFor="email" className="form-label">
+                Username
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="email"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Enter your username"
+                required
+              />
+            </div>
+
+            <div className="mb-3">
               <label htmlFor="password" className="form-label">
                 Password
               </label>
@@ -102,30 +137,14 @@ export default function LoginPage() {
               />
             </div>
 
-            <div className="d-flex justify-content-between align-items-center mb-3">
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="remember"
-                />
-                <label className="form-check-label" htmlFor="remember">
-                  Remember me
-                </label>
-              </div>
-              <a href="#" className="text-decoration-none text-primary">
-                Forgot password
-              </a>
-            </div>
-
             <button
               type="submit"
               className="btn btn-Login text-white w-100 mb-3"
               onClick={(e) => {
-                handleLogin(e);
+                handleRegister(e);
               }}
             >
-              Sign in
+              Sign up
             </button>
 
             <button type="button" className="btn btn-outline-secondary w-100">
@@ -136,14 +155,14 @@ export default function LoginPage() {
                 height={20}
                 className="me-2"
               /> */}
-              Sign in with Google
+              Sign up with Google
             </button>
           </form>
 
           <p className="text-center text-muted">
-            Don't have an account?{" "}
-            <Link to="/register" className="text-danger text-decoration-none">
-              Sign up for free!
+            Already have an account?{" "}
+            <Link to="/login" className="text-danger text-decoration-none">
+              Sign in now
             </Link>
           </p>
         </div>
@@ -168,4 +187,6 @@ export default function LoginPage() {
       </div>
     </div>
   );
-}
+};
+
+export default Register;

@@ -9,6 +9,7 @@ import DashBoard from "./components/Admin/Content/DashBoard";
 import Login from "./components/Auth/Login/Login";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Register from "./components/Auth/Register/Register";
 
 const Layout = () => {
   return (
@@ -24,7 +25,7 @@ const Layout = () => {
         </Route>
 
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
 
       <ToastContainer
