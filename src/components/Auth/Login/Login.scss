@@ -1,0 +1,33 @@
+.gradient-custom {
+  background: #6a11cb;
+
+  background: -webkit-linear-gradient(
+    to right,
+    rgba(106, 17, 203, 1),
+    rgba(37, 117, 252, 1)
+  );
+
+  background: linear-gradient(
+    to right,
+    rgba(106, 17, 203, 1),
+    rgba(37, 117, 252, 1)
+  );
+}
+
+.title {
+  color: #030303;
+  font-size: 34px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1.02px;
+  word-wrap: break-word;
+}
+
+.btn-Login {
+  background-color: #303030;
+
+  &:hover {
+    background-color: black;
+    color: white;
+  }
+}

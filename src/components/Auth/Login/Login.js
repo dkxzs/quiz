@@ -1,0 +1,138 @@
+import { useState } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import btnLoginBg from "../../../assets/qizzz.png";
+import { useNavigate } from "react-router-dom";
+import "./Login.scss";
+
+
+import { login } from "../../../services/apiServices";
+import { toast } from "react-toastify";
+
+export default function LoginPage() {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    let data = await login(email, password);
+    if(data && data.EC === 0) {
+      toast.success(data.EM);
+      navigate("/")
+    }
+
+    if(data && data.EC !== 0) {
+      toast.error(data.EM);
+    }
+  };
+
+  return (
+    <div className="d-flex vh-100">
+      {/* Left side */}
+      <div className="flex-grow-1 d-flex align-items-center justify-content-center p-4 p-lg-5">
+        <div className="w-100" style={{ maxWidth: "400px" }}>
+          <div className="mb-4">
+            <h1 className="h3 fw-bold">WELCOME BACK</h1>
+            <p className="text-muted">
+              Welcome back! Please enter your details.
+            </p>
+          </div>
+
+          <form className="mb-4">
+            <div className="mb-3">
+              <label htmlFor="email" className="form-label">
+                Email
+              </label>
+              <input
+                type="email"
+                className="form-control"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                required
+              />
+            </div>
+
+            <div className="mb-3">
+              <label htmlFor="password" className="form-label">
+                Password
+              </label>
+              <input
+                type="password"
+                className="form-control"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••••"
+                required
+              />
+            </div>
+
+            <div className="d-flex justify-content-between align-items-center mb-3">
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  id="remember"
+                />
+                <label className="form-check-label" htmlFor="remember">
+                  Remember me
+                </label>
+              </div>
+              <a href="#" className="text-decoration-none text-primary">
+                Forgot password
+              </a>
+            </div>
+
+            <button
+              type="submit"
+              className="btn btn-Login text-white w-100 mb-3"
+              onClick={(e) => {
+                handleLogin(e);
+              }}
+            >
+              Sign in
+            </button>
+
+            <button type="button" className="btn btn-outline-secondary w-100">
+              {/* <img
+                src="/google.svg"
+                alt="Google"
+                width={20}
+                height={20}
+                className="me-2"
+              /> */}
+              Sign in with Google
+            </button>
+          </form>
+
+          <p className="text-center text-muted">
+            Don't have an account?{" "}
+            <a href="#" className="text-danger text-decoration-none">
+              Sign up for free!
+            </a>
+          </p>
+        </div>
+      </div>
+
+      {/* Right side - Hero Image */}
+      <div className="d-none d-lg-flex flex-grow-1 bg-light position-relative overflow-hidden">
+        {/* <div
+          className="position-absolute w-100 h-100"
+          style={{
+            backgroundImage: "url('/splash.svg')",
+            opacity: 0.5,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        /> */}
+        <img
+          src={btnLoginBg}
+          alt=""
+          className="position-absolute top-50 start-50 translate-middle w-100 h-100 object-fit-cover"
+        />
+      </div>
+    </div>
+  );
+}
