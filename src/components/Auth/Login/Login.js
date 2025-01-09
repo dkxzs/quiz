@@ -6,11 +6,14 @@ import "./Login.scss";
 
 import { login } from "../../../services/apiServices";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { actionLogin } from "../../../redux/actions/userAction";
 
 export default function LoginPage() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
 
   const validateEmail = () => {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -31,7 +34,7 @@ export default function LoginPage() {
       return false;
     }
 
-    if (password.trim().length <= 6) {
+    if (password.trim().length < 6) {
       toast.error("Password must be at least 6 characters");
       return false;
     }
@@ -50,6 +53,7 @@ export default function LoginPage() {
     if (!validate()) return;
     let data = await login(email, password);
     if (data && data.EC === 0) {
+      dispatch(actionLogin(data));
       toast.success(data.EM);
       navigate("/");
     }
