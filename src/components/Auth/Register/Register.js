@@ -2,6 +2,7 @@ import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import btnLoginBg from "../../../assets/qizzz.png";
 import { useNavigate, Link } from "react-router-dom";
+import { ImSpinner } from "react-icons/im";
 
 import "./Register.scss";
 
@@ -13,6 +14,7 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const validateEmail = () => {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -68,13 +70,16 @@ const Register = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     if (!validate()) return;
+    setLoading(true);
     let data = await register(email, password, username);
     if (data && data.EC === 0) {
       toast.success(data.EM);
+      setLoading(false);
       navigate("/login");
     }
 
     if (data && data.EC !== 0) {
+      setLoading(false);
       toast.error(data.EM);
     }
   };
@@ -143,11 +148,16 @@ const Register = () => {
               onClick={(e) => {
                 handleRegister(e);
               }}
+              disabled={loading}
             >
-              Sign up
+              {loading ? <ImSpinner className="me-2" /> : <span>Sign up</span>}
             </button>
 
-            <button type="button" className="btn btn-outline-secondary w-100">
+            <button
+              type="button"
+              className="btn btn-outline-secondary w-100"
+              disabled={loading}
+            >
               {/* <img
                 src="/google.svg"
                 alt="Google"

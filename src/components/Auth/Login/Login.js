@@ -2,6 +2,7 @@ import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import btnLoginBg from "../../../assets/qizzz.png";
 import { Link, useNavigate } from "react-router-dom";
+import { ImSpinner } from "react-icons/im";
 import "./Login.scss";
 
 import { login } from "../../../services/apiServices";
@@ -13,6 +14,7 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
   const validateEmail = () => {
@@ -51,15 +53,18 @@ export default function LoginPage() {
   const handleLogin = async (e) => {
     e.preventDefault();
     if (!validate()) return;
+    setLoading(true);
     let data = await login(email, password);
     if (data && data.EC === 0) {
       dispatch(actionLogin(data));
       toast.success(data.EM);
+      setLoading(false);
       navigate("/");
     }
 
     if (data && data.EC !== 0) {
       toast.error(data.EM);
+      setLoading(false);
     }
   };
 
@@ -128,11 +133,20 @@ export default function LoginPage() {
               onClick={(e) => {
                 handleLogin(e);
               }}
+              disabled={loading}
             >
-              Sign in
+              {loading ? (
+                <ImSpinner className="me-2 spinIcon" />
+              ) : (
+                <span>Sign in</span>
+              )}
             </button>
 
-            <button type="button" className="btn btn-outline-secondary w-100">
+            <button
+              type="button"
+              className="btn btn-outline-secondary w-100"
+              disabled={loading}
+            >
               {/* <img
                 src="/google.svg"
                 alt="Google"
@@ -140,6 +154,7 @@ export default function LoginPage() {
                 height={20}
                 className="me-2"
               /> */}
+              
               Sign in with Google
             </button>
           </form>

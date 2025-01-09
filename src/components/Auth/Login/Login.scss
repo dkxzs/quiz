@@ -30,4 +30,22 @@
     background-color: black;
     color: white;
   }
+
+  &:disabled {
+    background-color: #303030;
+    cursor: no-drop;
+  }
+}
+
+.spinIcon {
+  animation: spinner 1s linear infinite;
+}
+
+@keyframes spinner {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
