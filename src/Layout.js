@@ -6,12 +6,13 @@ import HomePage from "./components/Home/HomePage";
 import ManagerUser from "./components/Admin/Content/ManagerUser";
 import DashBoard from "./components/Admin/Content/DashBoard";
 import Login from "./components/Auth/Login/Login";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Register from "./components/Auth/Register/Register";
 import ListQuiz from "./components/User/ListQuiz";
 import DetailQuiz from "./components/User/DetailQuiz";
 import NotFound from "./components/NotFound/NotFound";
+import ManagerQuiz from "./components/Admin/Content/Quiz/ManagerQuiz";
 
 const Layout = () => {
   return (
@@ -26,7 +27,7 @@ const Layout = () => {
         <Route path="/admin" element={<Admin />}>
           <Route index element={<DashBoard />} />
           <Route path="manager-users" element={<ManagerUser />} />
-          
+          <Route path="manager-quiz" element={<ManagerQuiz />} />
         </Route>
 
         <Route path="/login" element={<Login />} />

@@ -47,17 +47,20 @@ const Sidebar = (props) => {
         <SidebarContent>
           <Menu iconShape="circle">
             <MenuItem icon={<FaTachometerAlt />}>
-            <Link to="/admin" />
-            Dashboard
+              <Link to="/admin" />
+              Dashboard
             </MenuItem>
           </Menu>
           <Menu iconShape="circle">
             <SubMenu icon={<FaGem />} title="Features">
-              <MenuItem> 
-              <Link to="/admin/manager-users"/>
-              Manager Users
+              <MenuItem>
+                <Link to="/admin/manager-users" />
+                Manager Users
               </MenuItem>
-              <MenuItem> Manager Quiz</MenuItem>
+              <MenuItem>
+                <Link to="/admin/manager-quiz" />
+                Manager Quiz
+              </MenuItem>
               <MenuItem> Manager Questions</MenuItem>
             </SubMenu>
           </Menu>
