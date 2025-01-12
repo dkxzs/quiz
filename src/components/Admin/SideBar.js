@@ -1,5 +1,5 @@
 import "react-pro-sidebar/dist/css/styles.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   ProSidebar,
   Menu,
@@ -16,7 +16,8 @@ import { DiReact } from "react-icons/di";
 import "./SideBar.scss";
 
 const Sidebar = (props) => {
-  const { image, collapsed, toggled, handleToggleSidebar } = props;
+  const { collapsed, toggled, handleToggleSidebar } = props;
+  const navigate = useNavigate();
   return (
     <>
       <ProSidebar
@@ -37,10 +38,11 @@ const Sidebar = (props) => {
               overflow: "hidden",
               textOverflow: "ellipsis",
               whiteSpace: "nowrap",
+              cursor: "pointer",
             }}
           >
             <DiReact size={"3em"} color="00bfff" />
-            Sudo Dev
+            <span onClick={() => navigate("/")}>Sudo Dev</span>
           </div>
         </SidebarHeader>
 
