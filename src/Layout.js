@@ -13,6 +13,7 @@ import ListQuiz from "./components/User/ListQuiz";
 import DetailQuiz from "./components/User/DetailQuiz";
 import NotFound from "./components/NotFound/NotFound";
 import ManagerQuiz from "./components/Admin/Content/Quiz/ManagerQuiz";
+import Questions from "./components/Admin/Content/Question/Questions";
 
 const Layout = () => {
   return (
@@ -26,8 +27,9 @@ const Layout = () => {
 
         <Route path="/admin" element={<Admin />}>
           <Route index element={<DashBoard />} />
-          <Route path="manager-users" element={<ManagerUser />} />
-          <Route path="manager-quiz" element={<ManagerQuiz />} />
+          <Route path="manage-users" element={<ManagerUser />} />
+          <Route path="manage-quiz" element={<ManagerQuiz />} />
+          <Route path="manage-questions" element={<Questions />} />
         </Route>
 
         <Route path="/login" element={<Login />} />

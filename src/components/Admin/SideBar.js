@@ -56,14 +56,17 @@ const Sidebar = (props) => {
           <Menu iconShape="circle">
             <SubMenu icon={<FaGem />} title="Features">
               <MenuItem>
-                <Link to="/admin/manager-users" />
+                <Link to="/admin/manage-users" />
                 Manager Users
               </MenuItem>
               <MenuItem>
-                <Link to="/admin/manager-quiz" />
+                <Link to="/admin/manage-quiz" />
                 Manager Quiz
               </MenuItem>
-              <MenuItem> Manager Questions</MenuItem>
+              <MenuItem>
+                <Link to="/admin/manage-questions" />
+                Manager Questions
+              </MenuItem>
             </SubMenu>
           </Menu>
         </SidebarContent>

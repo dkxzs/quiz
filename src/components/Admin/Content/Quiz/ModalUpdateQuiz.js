@@ -59,7 +59,13 @@ const ModalUpdateQuiz = (props) => {
     // Gửi ảnh mới nếu có, giữ nguyên ảnh cũ nếu không có ảnh mới
     const updatedImage = image || null;
 
-    let data = await updateQuiz(dataUpdate.id, description, name, type, image);
+    let data = await updateQuiz(
+      dataUpdate.id,
+      updatedDescription,
+      updatedName,
+      updatedType,
+      updatedImage
+    );
     if (data && data.EC === 0) {
       toast.success(data.EM);
       handleClose();
