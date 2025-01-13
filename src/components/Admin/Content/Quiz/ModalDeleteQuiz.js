@@ -1,23 +1,21 @@
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { deleteUser } from "../../../services/apiServices";
+import { deleteQuiz } from "../../../../services/apiServices";
 import { toast } from "react-toastify";
 
-const ModalDeleteUser = (props) => {
-  const { show, setShow, dataDelete, fetchAllUserWithPaging, setCurrentPage } =
-    props;
+const ModalDeleteQuiz = (props) => {
+  const { show, setShow, dataDelete, fetchAllQuiz } = props;
 
   const handleClose = () => setShow(false);
 
   const handleDelete = async () => {
-    let data = await deleteUser(dataDelete.id);
-    if (data && data.EC === 0) {
-      toast.success(data.EM);
+    let res = await deleteQuiz(dataDelete);
+    if (res && res.EC === 0) {
+      toast.success(res.EM);
       handleClose();
-      setCurrentPage(1);
-      await fetchAllUserWithPaging(1);
+      await fetchAllQuiz();
     } else {
-      toast.error(data.EM);
+      toast.error(res.EM);
     }
   };
 
@@ -25,11 +23,10 @@ const ModalDeleteUser = (props) => {
     <>
       <Modal backdrop="static" show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Comfirm delete user</Modal.Title>
+          <Modal.Title>Comfirm delete quiz</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Are you sure to delete this user. email ={" "}
-          <b>{dataDelete && dataDelete.email ? dataDelete.email : ""}</b>
+          Are you sure to delete this quiz. id = {dataDelete}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
@@ -44,4 +41,4 @@ const ModalDeleteUser = (props) => {
   );
 };
 
-export default ModalDeleteUser;
+export default ModalDeleteQuiz;

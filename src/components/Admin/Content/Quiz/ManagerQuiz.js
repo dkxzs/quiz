@@ -1,6 +1,6 @@
 import Select from "react-select";
 import { toast } from "react-toastify";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Accordion from "react-bootstrap/Accordion";
 import "./ManagerQuiz.scss";
 import {
@@ -14,12 +14,20 @@ const ManagerQuiz = () => {
   const [description, setDescription] = useState("");
   const [type, setType] = useState("");
   const [image, setImage] = useState(null);
+  const [listQuiz, setListQuiz] = useState([]);
 
   const options = [
     { value: "EASY", label: "EASY" },
     { value: "MEDIUM", label: "MEDIUM" },
     { value: "HARD", label: "HARD" },
   ];
+
+  const fetchAllQuiz = async () => {
+    const res = await getAllQuizForAdmin();
+    if (res && res.EC === 0) {
+      setListQuiz(res.DT);
+    }
+  };
 
   const handleChangeFile = (e) => {
     if (!e.target.files[0]) return;
@@ -38,11 +46,15 @@ const ManagerQuiz = () => {
       setDescription("");
       setType("");
       setImage(null);
-      await getAllQuizForAdmin();
+      await fetchAllQuiz();
     } else {
       toast.error(res.EM);
     }
   };
+
+  useEffect(() => {
+    fetchAllQuiz();
+  }, []);
 
   return (
     <div className="quiz-container">
@@ -105,7 +117,7 @@ const ManagerQuiz = () => {
         </Accordion.Item>
       </Accordion>
       <div className="list-detail">
-        <TableQuiz />
+        <TableQuiz listQuiz={listQuiz} setListQuiz={setListQuiz} />
       </div>
     </div>
   );
