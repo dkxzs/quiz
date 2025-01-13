@@ -7,38 +7,56 @@
     font-weight: 600;
   }
 
+  .select-quiz {
+    z-index: 3;
+  }
+
   .questions-content {
     display: flex;
     gap: 25px;
 
     .description {
       width: 50%;
+
+      .q-label {
+        z-index: 0;
+      }
     }
 
     .upload {
       padding-top: 15px;
       .label-upload {
-        height: 30px;
-        border: 1px solid red;
-        border-radius: 5px;
-        padding: 0px 10px;
         margin-right: 5px;
         cursor: pointer;
+        font-size: 25px;
+        color: #9068ff;
+        &:hover {
+          color: #4400ff;
+        }
       }
     }
 
     .btn-add {
       .icon-add {
-        font-size: 30px;
+        font-size: 25px;
+        color: #2596ff;
         cursor: pointer;
-        color: rgb(16, 81, 156);
+
+        &:hover {
+          .icon-add {
+            color: #0989ff;
+          }
+        }
       }
 
       .icon-remove {
         margin-left: 10px;
-        font-size: 30px;
+        font-size: 25px;
         cursor: pointer;
-        color: rgb(195, 27, 27);
+        color: #e8771c;
+        &:hover {
+          color: #ff7608;
+        }
       }
     }
   }
@@ -51,7 +69,7 @@
     align-items: center;
 
     .isCorrect {
-        font-size: 20px;
+      font-size: 20px;
     }
 
     .answer-name {
@@ -60,16 +78,25 @@
 
     .btn-answers {
       .icon-add {
-        font-size: 30px;
+        font-size: 25px;
+        color: #2596ff;
         cursor: pointer;
-        color: rgb(16, 81, 156);
+
+        &:hover {
+          .icon-add {
+            color: #0989ff;
+          }
+        }
       }
 
       .icon-remove {
         margin-left: 10px;
-        font-size: 30px;
+        font-size: 25px;
         cursor: pointer;
-        color: rgb(195, 27, 27);
+        color: #e8771c;
+        &:hover {
+          color: #ff7608;
+        }
       }
     }
   }
