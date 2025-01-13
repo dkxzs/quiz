@@ -2,7 +2,6 @@ import ModalCreateUser from "./ModalCreatUser.js";
 import "./ManagerUser.scss";
 import { FcPlus } from "react-icons/fc";
 import { useState, useEffect } from "react";
-import TableUser from "./TableUser.js";
 import { getAllUser, getUserWithPaginate } from "../../../services/apiServices";
 import ModalUpdateUser from "./ModalUpdateUser.js";
 import ModalDeleteUser from "./ModalDeleteUser.js";

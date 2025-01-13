@@ -43,15 +43,28 @@ const register = (email, password, username) => {
 
 const getQuizByUser = () => {
   return axios.get("api/v1/quiz-by-participant");
-}
+};
 
 const getDataQuiz = (quizId) => {
   return axios.get(`api/v1/questions-by-quiz?quizId=${quizId}`);
-}
+};
 
 const postSubmitQuiz = (data) => {
-  return axios.post(`api/v1/quiz-submit`, {...data});
-}
+  return axios.post(`api/v1/quiz-submit`, { ...data });
+};
+
+const createNewQuiz = (description, name, difficulty, image) => {
+  const data = new FormData();
+  data.append("description", description);
+  data.append("name", name);
+  data.append("difficulty", difficulty);
+  data.append("quizImage", image);
+  return axios.post(`api/v1/quiz`, data);
+};
+
+const getAllQuizForAdmin = () => {
+  return axios.get(`api/v1/quiz/all`);
+};
 
 export {
   createNewUser,
@@ -61,7 +74,9 @@ export {
   getUserWithPaginate,
   login,
   register,
-  getQuizByUser, 
-  getDataQuiz, 
-  postSubmitQuiz
+  getQuizByUser,
+  getDataQuiz,
+  postSubmitQuiz,
+  createNewQuiz,
+  getAllQuizForAdmin,
 };
