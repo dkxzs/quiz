@@ -5,7 +5,6 @@ import Navbar from "react-bootstrap/Navbar";
 import { useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 const Header = () => {
-  const account = useSelector((state) => state.user.user);
   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
   const navigate = useNavigate();
   const handleLogin = () => {
