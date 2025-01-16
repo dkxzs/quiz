@@ -73,11 +73,43 @@ const updateQuiz = (id, description, name, difficulty, quizImage) => {
   data.append("name", name);
   data.append("difficulty", difficulty);
   data.append("quizImage", quizImage);
-  return axios.put(`api/v1/quiz`,data);
+  return axios.put(`api/v1/quiz`, data);
 };
 
 const deleteQuiz = (userId) => {
   return axios.delete(`api/v1/quiz/${userId}`);
+};
+
+const createNewQuestionForQuiz = (quiz_id, description, image) => {
+  let data = new FormData();
+  data.append("quiz_id", quiz_id);
+  data.append("description", description);
+  data.append("questionImage", image);
+  return axios.post("api/v1/question", data);
+};
+
+const createNewAnswerForQuestion = (
+  description,
+  correct_answer,
+  question_id
+) => {
+  return axios.post("api/v1/answer", {
+    description,
+    correct_answer,
+    question_id,
+  });
+};
+
+const assignQuizToUser = (quizId, userId) => {
+  return axios.post("api/v1/quiz-assign-to-user", { quizId, userId });
+};
+
+const getQuizWithQA = (quizId) => {
+  return axios.get(`api/v1/quiz-with-qa/${quizId}`);
+};
+
+const upsertQA = (data) => {
+  return axios.post(`api/v1/quiz-upsert-qa`, { ...data });
 };
 
 export {
@@ -95,4 +127,9 @@ export {
   getAllQuizForAdmin,
   updateQuiz,
   deleteQuiz,
+  createNewQuestionForQuiz,
+  createNewAnswerForQuestion,
+  assignQuizToUser,
+  getQuizWithQA,
+  upsertQA,
 };

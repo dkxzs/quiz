@@ -2,19 +2,19 @@ import { useEffect, useState } from "react";
 import Select from "react-select";
 import { CiCirclePlus, CiCircleMinus } from "react-icons/ci";
 import { RiImageAddFill } from "react-icons/ri";
-import "./Questions.scss";
+import "./QuizQA.scss";
 import _ from "lodash";
 import { toast } from "react-toastify";
 import Lightbox from "react-awesome-lightbox";
 import {
   getAllQuizForAdmin,
-  createNewQuestionForQuiz,
-  createNewAnswerForQuestion,
+  getQuizWithQA,
+  upsertQA,
 } from "../../../../services/apiServices";
 import { v4 as uuidv4 } from "uuid";
 uuidv4();
 
-const Questions = () => {
+const QuizQA = () => {
   const initQuestion = [
     {
       id: uuidv4(),
@@ -42,6 +42,38 @@ const Questions = () => {
   useEffect(() => {
     fetchQuiz();
   }, []);
+
+  useEffect(() => {
+    if (selectedQuiz && selectedQuiz.value) {
+      fetchQuizWithQA();
+    }
+  }, [selectedQuiz]);
+
+  const urltofile = (url, filename, miniType) => {
+    return fetch(url)
+      .then((res) => res.arrayBuffer())
+      .then((buf) => new File([buf], filename, { type: miniType }));
+  };
+
+  const fetchQuizWithQA = async () => {
+    let res = await getQuizWithQA(selectedQuiz.value);
+    if (res && res.EC === 0) {
+      let newQA = [];
+      for (let i = 0; i < res.DT.qa.length; i++) {
+        let q = res.DT.qa[i];
+        if (q.imageFile) {
+          q.imageName = `Question-${q.id}`;
+          q.imageFile = await urltofile(
+            `data:image/jpeg;base64,${q.imageFile}`,
+            `Question-${q.id}`,
+            "image/jpeg"
+          );
+        }
+        newQA.push(q);
+      }
+      setQuestions(newQA);
+    }
+  };
 
   const fetchQuiz = async () => {
     let res = await getAllQuizForAdmin();
@@ -160,7 +192,7 @@ const Questions = () => {
     }
   };
 
-  const handleSubmidQuestion = async () => {
+  const handleSubmitQuestion = async () => {
     // console.log("check data", questions, selectedQuiz);
     // validate
     if (_.isEmpty(selectedQuiz)) {
@@ -210,30 +242,54 @@ const Questions = () => {
       return;
     }
 
-    for (const question of questions) {
-      const res = await createNewQuestionForQuiz(
-        +selectedQuiz.value,
-        question.description,
-        question.imageFile
-      );
-      // submit answer
-      for (const answer of question.answers) {
-        await createNewAnswerForQuestion(
-          answer.description,
-          answer.isCorrect,
-          res.DT.id
+    // for (const question of questions) {
+    //   const res = await createNewQuestionForQuiz(
+    //     +selectedQuiz.value,
+    //     question.description,
+    //     question.imageFile
+    //   );
+    //   // submit answer
+    //   for (const answer of question.answers) {
+    //     await createNewAnswerForQuestion(
+    //       answer.description,
+    //       answer.isCorrect,
+    //       res.DT.id
+    //     );
+    //   }
+    // }
+
+    let questionsClone = _.cloneDeep(questions);
+    for (let i = 0; i < questionsClone.length; i++) {
+      if (questionsClone[i].imageFile) {
+        questionsClone[i].imageFile = await toBase64(
+          questionsClone[i].imageFile
         );
       }
     }
+    let res = await upsertQA({
+      quizId: selectedQuiz.value,
+      questions: questionsClone,
+    });
 
-    toast.success("Create new question successfully!");
-    setQuestions(initQuestion);
+    if (res && res.EC === 0) {
+      toast.success(res.EM);
+      fetchQuizWithQA();
+    }
+
+    // toast.success("Create new question successfully!");
+    // setQuestions(initQuestion);
   };
+
+  const toBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
 
   return (
     <div className="questions-container">
-      <div className="title">Manage questions</div>
-      <hr />
       <div className="add-new-question">
         <div className="col-6 form-group">
           <label className="mb-2">Select quiz:</label>
@@ -376,7 +432,7 @@ const Questions = () => {
           <div>
             <button
               className="btn btn-primary"
-              onClick={() => handleSubmidQuestion()}
+              onClick={() => handleSubmitQuestion()}
             >
               Save questions
             </button>
@@ -395,4 +451,4 @@ const Questions = () => {
   );
 };
 
-export default Questions;
+export default QuizQA;
