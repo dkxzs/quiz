@@ -68,6 +68,12 @@ export default function LoginPage() {
     }
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleLogin(e);
+    }
+  };
+
   return (
     <div className="d-flex vh-100">
       {/* Left side */}
@@ -108,6 +114,7 @@ export default function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••••"
                 required
+                onKeyDown={(e) => handleKeyDown(e)}
               />
             </div>
 
