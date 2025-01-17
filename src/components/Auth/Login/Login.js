@@ -154,7 +154,6 @@ export default function LoginPage() {
                 height={20}
                 className="me-2"
               /> */}
-              
               Sign in with Google
             </button>
           </form>
@@ -165,6 +164,13 @@ export default function LoginPage() {
               Sign up for free!
             </Link>
           </p>
+          <div
+            className="text-center cursor-pointer text-primary fw-bold fs-5"
+            style={{ cursor: "pointer" }}
+            onClick={() => navigate("/")}
+          >
+            Go to home
+          </div>
         </div>
       </div>
 

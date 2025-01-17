@@ -175,6 +175,13 @@ const Register = () => {
               Sign in now
             </Link>
           </p>
+          <div
+            className="text-center cursor-pointer text-primary fw-bold fs-5"
+            style={{ cursor: "pointer" }}
+            onClick={() => navigate("/")}
+          >
+            Go to home
+          </div>
         </div>
       </div>
 

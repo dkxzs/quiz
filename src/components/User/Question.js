@@ -1,7 +1,11 @@
 import _ from "lodash";
+import { useState } from "react";
+import Lightbox from "react-awesome-lightbox";
 
 const Question = (props) => {
   const { data, index, handleCheckBox } = props;
+  const [isOpen, setIsOpen] = useState(false);
+
   if (_.isEmpty(data)) {
     return <></>;
   }
@@ -14,11 +18,21 @@ const Question = (props) => {
     <>
       <div className="q-image">
         {data.image && (
-          <img
-            src={`data:image/jpeg;base64, ${data.image}`}
-            className="card-img-top"
-            alt="..."
-          />
+          <>
+            <img
+              src={`data:image/jpeg;base64, ${data.image}`}
+              className="card-img-top"
+              alt="..."
+              onClick={() => setIsOpen(true)}
+            />
+            {isOpen && (
+              <Lightbox
+                image={`data:image/jpeg;base64, ${data.image}`}
+                title={"Question image"}
+                onClose={() => setIsOpen(false)}
+              />
+            )}
+          </>
         )}
       </div>
 
