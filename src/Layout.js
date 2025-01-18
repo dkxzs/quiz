@@ -15,10 +15,11 @@ import NotFound from "./components/NotFound/NotFound";
 import ManagerQuiz from "./components/Admin/Content/Quiz/ManagerQuiz";
 import Questions from "./components/Admin/Content/Question/Questions";
 import PrivateRoute from "./routes/PrivateRoute";
+import { Suspense } from "react";
 
 const Layout = () => {
   return (
-    <>
+    <Suspense fallback={<div>Loading...</div>}>
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<HomePage />} />
@@ -63,7 +64,7 @@ const Layout = () => {
         draggable
         pauseOnHover
       />
-    </>
+    </Suspense>
   );
 };
 

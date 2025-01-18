@@ -20,6 +20,12 @@ body {
   }
 }
 
+.languages {
+  .dropdown-toggle::after {
+    display: none;
+  }
+}
+
 .app-container {
   .header-container {
     .btn-login {
